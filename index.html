@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#172033">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="貓咪抽選器">
+<title>貓咪大戰爭｜十隻出戰抽選器</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:dark;--bg:#101827;--panel:#192538;--panel2:#202f45;--line:#34445c;--text:#f3f6fc;--muted:#aab7ca;--gold:#f1bd55;--green:#7bc995;--blue:#73c7e5;--purple:#c1a0f2;--orange:#f1bd55}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#263b59 0,#101827 55%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:760px;margin:auto;padding:22px 16px 40px}.hero{text-align:center;padding:12px 0 20px}.logo{font-size:42px}.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--gold);font-weight:800}.hero h1{font-size:clamp(24px,5vw,34px);margin:8px 0}.hero p{color:var(--muted);font-size:14px;margin:0}
+.panel{background:linear-gradient(145deg,#1c2b40,#172337);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 12px 30px #0002}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;font-weight:800}.tag{font-size:12px;color:var(--muted);font-weight:600}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.tab{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:12px 8px;font-size:13px;font-weight:750;cursor:pointer}.tab.active{border-color:var(--gold);background:#574523;color:#fff2ce}
+.pool-info{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px 0 12px}.pool-name{font-weight:800}.pool-total{font-size:12px;color:var(--muted);margin-top:4px}.pick-count{text-align:right;font-weight:800}.pick-count small{display:block;color:var(--muted);font-weight:500}
+button{font:inherit;cursor:pointer}.btn{width:100%;border:0;border-radius:13px;padding:14px 12px;font-weight:850;background:var(--gold);color:#2c210e;font-size:15px}.btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line);font-size:14px;padding:12px}.btn:active,.tab:active{transform:scale(.99)}
+.numbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:12px}.number{background:#111c2c;border:1px solid var(--line);border-radius:12px;text-align:center;padding:13px 4px;font-size:clamp(19px,5vw,25px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.03em}.number.green{border-color:#7bc99599}.number.blue{border-color:#73c7e599}.number.purple{border-color:#c1a0f299}.number.gold{border-color:#f1bd5599}.empty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:22px 4px}
+.rule-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.rule{background:#111c2c;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.rule strong{display:block;font-size:25px}.rule span{font-size:12px;color:var(--muted)}
+.result-group{border:1px solid var(--line);background:#152237;border-radius:13px;padding:12px;margin-top:10px}.result-head{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:800}.result-head small{color:var(--muted);font-weight:500}.green-text{color:var(--green)}.blue-text{color:var(--blue)}.purple-text{color:var(--purple)}.gold-text{color:var(--gold)}
+.status{text-align:center;color:var(--muted);font-size:12px;margin-top:10px;min-height:18px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.note{font-size:12px;line-height:1.7;color:var(--muted);margin:12px 2px 0}.footer{text-align:center;color:#8190a6;font-size:11px;padding:12px}
+@media(min-width:600px){.tabs{grid-template-columns:repeat(4,1fr)}.numbers{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero"><div class="logo">🐈</div><div class="eyebrow">BATTLE CATS · RANDOM TEAM PICKER</div><h1>十隻出戰抽選器</h1><p>從四大分類隨機抽出你的挑戰陣容</p></header>
+<section class="panel">
+ <div class="section-title"><span>🎲 分類抽選</span><span class="tag">共 390 個編號</span></div>
+ <nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="0">🌱 基本＋EX</button>
+  <button class="tab" data-tab="1">💧 稀有</button>
+  <button class="tab" data-tab="2">⚡ 激稀有</button>
+  <button class="tab" data-tab="3">👑 超級＋傳說</button>
+ </nav>
+ <div class="pool-info"><div><div class="pool-name" id="poolName">基本＋EX 貓</div><div class="pool-total" id="poolTotal">總數 111 隻｜編號 001–111</div></div><div class="pick-count"><span id="poolPick">2 隻</span><small>本分類抽選數量</small></div></div>
+ <button class="btn" id="singleDraw">🎲 抽選這個分類</button>
+ <div class="numbers" id="singleResult"><div class="empty">尚未抽選</div></div>
+ <div class="status" id="singleStatus" aria-live="polite">可單獨抽選分類，或一次抽出完整陣容。</div>
+</section>
+<section class="panel">
+ <div class="section-title"><span>⚔️ 最終出戰陣容</span><span class="tag" id="teamStatus">尚未抽選</span></div>
+ <div class="rule-grid">
+  <div class="rule"><strong class="gold-text">4</strong><span>超級稀有＋傳說稀有</span></div>
+  <div class="rule"><strong class="purple-text">2</strong><span>激稀有</span></div>
+  <div class="rule"><strong class="blue-text">2</strong><span>稀有</span></div>
+  <div class="rule"><strong class="green-text">2</strong><span>基本＋EX</span></div>
+ </div>
+ <div id="finalResult"><div class="empty">按下按鈕，召喚你的十隻出戰貓咪！🐾</div></div>
+ <button class="btn" id="allDraw" style="margin-top:14px">⚔️ 開始抽出 10 隻出戰貓咪</button>
+ <div class="actions"><button class="btn secondary" id="copy">📋 複製出戰編號</button><button class="btn secondary" id="reset">↻ 清除結果</button></div>
+ <p class="note">抽選採不重複隨機抽樣。數字是各分類內部的代號，不代表遊戲官方圖鑑編號。單獨抽選分類不會自動改變其他分類的結果。</p>
+ <div class="status" id="status" aria-live="polite"></div>
+</section>
+<div class="footer">貓咪大戰爭・個人抽選小工具</div>
+</main>
+<script>
+(()=>{
+const pools=[
+ {name:'基本＋EX 貓',total:111,pick:2,cls:'green',color:'green-text'},
+ {name:'稀有貓',total:113,pick:2,cls:'blue',color:'blue-text'},
+ {name:'激稀有貓',total:53,pick:2,cls:'purple',color:'purple-text'},
+ {name:'超級稀有＋傳說稀有貓',total:113,pick:4,cls:'gold',color:'gold-text'}
+];
+let active=0,results=[[],[],[],[]];
+const $=id=>document.getElementById(id);
+function sample(total,n){
+ const a=Array.from({length:total},(_,i)=>i+1);
+ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+ return a.slice(0,n).sort((x,y)=>x-y);
+}
+function card(n,cls){const d=document.createElement('div');d.className='number '+cls;d.textContent=String(n).padStart(3,'0');return d}
+function showSingle(){
+ const p=pools[active];$('poolName').textContent=p.name;$('poolTotal').textContent=`總數 ${p.total} 隻｜編號 001–${p.total}`;$('poolPick').textContent=p.pick+' 隻';
+ const area=$('singleResult');area.replaceChildren();
+ if(!results[active].length){const e=document.createElement('div');e.className='empty';e.textContent='尚未抽選';area.append(e);return}
+ results[active].forEach(n=>area.append(card(n,p.cls)));
+}
+function renderFinal(){
+ const area=$('finalResult');area.replaceChildren();
+ [3,2,1,0].forEach(i=>{
+  const p=pools[i],g=document.createElement('div');g.className='result-group';
+  const h=document.createElement('div');h.className='result-head';
+  const name=document.createElement('span');name.className=p.color;name.textContent=p.name;
+  const count=document.createElement('small');count.textContent=`${results[i].length}/${p.pick} 隻`;
+  h.append(name,count);const grid=document.createElement('div');grid.className='numbers';
+  results[i].forEach(n=>grid.append(card(n,p.cls)));g.append(h,grid);area.append(g);
+ });
+ $('teamStatus').textContent='已抽選 10 隻';
+}
+function drawAll(){results=pools.map(p=>sample(p.total,p.pick));showSingle();renderFinal();$('status').textContent='抽選完成！祝你順利通關！'}
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;active=Number(b.dataset.tab);document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('active',x===b));showSingle()});
+$('singleDraw').addEventListener('click',()=>{results[active]=sample(pools[active].total,pools[active].pick);showSingle();$('singleStatus').textContent='單分類抽選完成！'});
+$('allDraw').addEventListener('click',drawAll);
+$('reset').addEventListener('click',()=>{results=[[],[],[],[]];showSingle();$('finalResult').innerHTML='<div class="empty">按下按鈕，召喚你的十隻出戰貓咪！🐾</div>';$('teamStatus').textContent='尚未抽選';$('status').textContent='結果已清除。'});
+$('copy').addEventListener('click',async()=>{
+ if(!results.some(x=>x.length)){$('status').textContent='請先抽選！';return}
+ const labels=['基本＋EX','稀有','激稀有','超級＋傳說'];
+ const txt=labels.map((label,i)=>label+'：'+(results[i].length?results[i].map(n=>String(n).padStart(3,'0')).join(', '):'尚未抽選')).join('\n');
+ try{await navigator.clipboard.writeText(txt);$('status').textContent='出戰編號已複製！'}catch(e){$('status').textContent='無法直接複製，請使用瀏覽器分享或手動選取。'}
+});
+showSingle();
+})();
+</script>
+<script>if("serviceWorker" in navigator && location.protocol.startsWith("http")){navigator.serviceWorker.register("./sw.js").catch(()=>{});}</script></body></html>
